@@ -101,7 +101,7 @@ module.exports.time = function() {
         size: new V(114, 14),
         font: 'gothic-14',
         color: '#ffffff',
-        text: Settings.option('showClock') === true ? '%H:%M' : ''
+        text: 'a' + Settings.option('showClock') === true ? '%H:%M' : ''
     });
 };
 

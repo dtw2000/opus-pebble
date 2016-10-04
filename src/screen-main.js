@@ -95,13 +95,15 @@ module.exports.description = function(text) {
 
 
 module.exports.time = function() {
+	var host = Settings.data('activeHost').name;
+    var address = Settings.data('activeHost').address;
     return new UI.TimeText({
         textAlign: 'center',
         position: new V(0, 0),
         size: new V(114, 14),
         font: 'gothic-14',
         color: '#ffffff',
-        text: 'a' + Settings.option('showClock') === true ? '%H:%M' : ''
+        text: Settings.option('showClock') === true ? host+' %H:%M' : ''
     });
 };
 

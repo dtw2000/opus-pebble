@@ -71,7 +71,7 @@ module.exports.title = function(text) {
     }
     return new UI.Text({
         textAlign: 'left',
-        position: new V(8, 8 + (Settings.option('showClock') === true ? 6 : 0)),
+        position: new V(8, 8 + (Settings.option('showClock') === true ? 16 : 0)),
         size: new V(100, 83),
         font: 'gothic-28',
         color: '#ffffff',
@@ -100,11 +100,13 @@ module.exports.time = function() {
     return new UI.TimeText({
         textAlign: 'center',
         position: new V(0, 0),
-        size: new V(114, 14),
-        font: 'gothic-14',
+        //size: new V(114, 14),
+        //font: 'gothic-14',
+		size: new V(100, 83),
+        font: 'gothic-28',
         color: '#ffffff',
-        text: Settings.option('showClock') === true ? host+' %H:%M' : ''
-    });
+        text: Settings.option('showClock') === true ? host+'':''//' %H:%M' : ''
+	});
 };
 
 function setSizeOfElm(sizeValue, elm) {

@@ -13,7 +13,7 @@ var playerid = 0;
 var playertype;
 var playState = 0;
 var errors = 0;
-var menuMode = 'player';
+var menuMode = 'menu';
 var networkSuccessTracked = false;
 
 var titleUi;
@@ -22,7 +22,26 @@ var timeUi;
 var mainScreen;
 var retryTimeout;
 var onErrorCallback = function() {};
+var currHostIndex = Settings.data('activeHostIndex');
+var nextHostIndex = Settings.data('activeHostIndex') + 1;
+var numHosts = Settings.option('hosts').length - 1
+var shakes = 0;
 
+function toggleHost(event){
+	//var numHosts = Settings.option('hosts').length - 1
+ 	nextHostIndex++;
+	if (nextHostIndex > numHosts )
+	{
+		nextHostIndex = 0;
+	}    
+
+	var newHost = Settings.option('hosts')[nextHostIndex];
+    Settings.data('activeHost', newHost);
+    Settings.data('activeHostIndex', nextHostIndex);
+	Vibe.vibrate('double');
+    module.exports.reset();
+    module.exports.updatePlayerState();
+}
 
 function clearUi() {
     titleUi.remove();
@@ -422,7 +441,19 @@ function setupEventListeners() {
         }
     });
 
-    mainScreen.on('accelTap', module.exports.updatePlayerState);
+    //mainScreen.on('accelTap', module.exports.updatePlayerState);
+	mainScreen.on('accelTap', function(e){
+		shakes++;
+		if(shakes == 1)
+		{
+			setTimeout(function() {
+    	    	if(shakes >1) {
+					toggleHost();
+    	    	} 
+    	    	shakes = 0;
+    	    }, 700);
+		}
+	});
 
     mainScreen.on('hide', function() {
         var windowStack = require('ui/windowstack');
@@ -518,4 +549,3 @@ module.exports.init = function(m, errorCallback) {
 
     setupEventListeners();
 };
-
